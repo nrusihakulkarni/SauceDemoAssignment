@@ -23,14 +23,18 @@ public class SauceDemo1 {
             driver.navigate().to("https://www.saucedemo.com/");
             driver.manage().window().maximize();
             SauceDemo1 sauceDemoPractice = new SauceDemo1();
-            sauceDemoPractice.testCaseOne();
+           /* sauceDemoPractice.testCaseOne();
             Thread.sleep(500);
             sauceDemoPractice.testcaseTwo();
             Thread.sleep(500);
             sauceDemoPractice.testCaseThree();
             Thread.sleep(500);
-            sauceDemoPractice.testCaseFour();
+            sauceDemoPractice.testCaseFour();*/
             Thread.sleep(500);
+            sauceDemoPractice.testCaseFive("Fleece Jacket"); //Send a name of Product to be search
+            Thread.sleep(500);
+
+
         }
         catch (Exception e ){
            e.printStackTrace();
@@ -80,7 +84,7 @@ public class SauceDemo1 {
         Thread.sleep(500);
 
 
-        driver.findElement(By.xpath("//*/div[text()='" + sortPrise() + "']//parent::div/button")).click();
+        driver.findElement(By.xpath("//*/div[text()='" + sortPrice() + "']//parent::div/button")).click();
         System.out.println("**************************Item is  successfully added to cart ****************************");
         driver.findElement(By.xpath("//*/div[@class='shopping_cart_container']")).click();
         Thread.sleep(500);
@@ -218,7 +222,7 @@ public class SauceDemo1 {
 
         Thread.sleep(500);
 
-        driver.findElement(By.xpath("//*/div[text()='" + sortPrise() + "']//parent::div/button")).click();
+        driver.findElement(By.xpath("//*/div[text()='" + sortPrice() + "']//parent::div/button")).click();
         System.out.println("**************************Item is  successfully added to cart ****************************");
         driver.findElement(By.xpath("//*/div[@class='shopping_cart_container']")).click();
         Thread.sleep(500);
@@ -247,6 +251,70 @@ public class SauceDemo1 {
     }
 
 
+
+
+    public void testCaseFive(String  product ) throws InterruptedException {
+
+        System.out.println("******************************");
+        System.out.println("UserName" + getuserName(1)); //standard_user
+        System.out.println("data type : " + getPassword(1).getClass().getSimpleName());
+        System.out.println("Userpass" + getPassword(1)); // secret_sauce
+        System.out.println("******************************");
+        Thread.sleep(500);
+        String username = getuserName(1);
+        String password = getPassword(1);
+        driver.findElement(By.xpath("//input[@data-test='username']")).sendKeys(username);//
+        Thread.sleep(500);
+
+        driver.findElement(By.xpath("//input[@data-test='password']")).sendKeys(password);//getuserName(1)
+
+        Thread.sleep(500);
+
+        driver.findElement(By.xpath("//input[@id='login-button']")).click();
+
+        System.out.println("******************************************");
+
+        System.out.println("Title" + driver.getTitle());
+
+        Thread.sleep(500);
+
+        Assert.assertEquals("**********Login Fail ********************", "Swag Labs", driver.getTitle());
+        System.out.println("********************** Page Login Successfully********************");
+
+        Thread.sleep(500);
+
+
+
+        driver.findElement(By.xpath("//div[contains(text(), '"+product+"')]//ancestor::div[@class=\"inventory_item\"]//button")).click();
+        System.out.println("**************************Item is  successfully added to cart ****************************");
+        driver.findElement(By.xpath("//*/div[@class='shopping_cart_container']")).click();
+        Thread.sleep(500);
+        driver.findElement(By.xpath("//button[@id='checkout']")).click();
+        Thread.sleep(500);
+        driver.findElement(By.xpath("//input[@id='first-name']")).sendKeys(dataProvider().get("first-name"));
+        driver.findElement(By.xpath("//input[@id='last-name']")).sendKeys(dataProvider().get("last-name"));
+        driver.findElement(By.xpath("//input[@id='postal-code']")).sendKeys(dataProvider().get("postal-code"));
+        System.out.println("**************************user Details entered successfully  ****************************");
+        Thread.sleep(500);
+        driver.findElement(By.xpath("//input[@id='continue']")).click();
+        Thread.sleep(500);
+        driver.findElement(By.xpath("//button[@id='finish']")).click();
+        String successfullMsg = driver.findElement(By.xpath("//h2[@class='complete-header']")).getText();
+        System.out.println("*******" + "last page message :" + "*********** :" + successfullMsg + ": *********");
+        Thread.sleep(500);
+        System.out.println("**************************Product ordered  successfully for user :" + username + ": ****************************");
+        driver.findElement(By.xpath("//button[@name='back-to-products']")).click();
+        Thread.sleep(500);
+        driver.findElement(By.xpath("//button[@id='react-burger-menu-btn']")).click();
+        Thread.sleep(500);
+        driver.findElement(By.xpath("//a[@id='logout_sidebar_link']")).click();
+        System.out.println("**********************Test Case 1 Pass ********************************** ");
+        Thread.sleep(500);
+
+    }
+
+
+
     public String getuserName(int userNumber) {
 
         List<String> userCredntls;
@@ -267,22 +335,22 @@ public class SauceDemo1 {
         return String.valueOf(userCredntls.get(passNumber + userCredntls.size()-2));
     }
 
-    public String sortPrise() {
+    public String sortPrice() {
 
 
         List<WebElement> webelements;
-        List<Float> prise = new ArrayList<>();
+        List<Float> price = new ArrayList<>();
         webelements = driver.findElements(By.xpath("//div[@class='inventory_item_price']"));
-        webelements.forEach(webElement -> prise.add(Float.parseFloat(webElement.getText().replace("$", ""))));
+        webelements.forEach(webElement -> price.add(Float.parseFloat(webElement.getText().replace("$", ""))));
 
         System.out.println("*****************************************");
-        System.out.println("Prise List " + prise);
+        System.out.println("price List " + price);
 
         //noinspection ResultOfMethodCallIgnored
-        prise.stream().sorted();
+        price.stream().sorted();
 
-        System.out.println("Selected Prise " + prise.get(0).toString());
-        return prise.get(0).toString();
+        System.out.println("Selected price " + price.get(0).toString());
+        return price.get(0).toString();
 
     }
 
@@ -322,4 +390,5 @@ public class SauceDemo1 {
         Select select = new Select(driver.findElement(By.xpath("//select[@class='product_sort_container']")));
         select.selectByVisibleText(filterValue.get(index));
     }
+
 }
