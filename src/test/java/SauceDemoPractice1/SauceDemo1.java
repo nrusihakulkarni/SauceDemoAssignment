@@ -8,7 +8,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SauceDemo1 {
 
@@ -23,7 +26,7 @@ public class SauceDemo1 {
             driver.navigate().to("https://www.saucedemo.com/");
             driver.manage().window().maximize();
             SauceDemo1 sauceDemoPractice = new SauceDemo1();
-           sauceDemoPractice.testCaseOne();
+            sauceDemoPractice.testCaseOne();
             Thread.sleep(500);
             sauceDemoPractice.testcaseTwo();
             Thread.sleep(500);
@@ -35,13 +38,11 @@ public class SauceDemo1 {
             Thread.sleep(500);
 
 
-        }
-        catch (Exception e ){
-           e.printStackTrace();
-       driver.quit();
-        }
-        finally {
-          driver.quit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            driver.quit();
+        } finally {
+            driver.quit();
         }
     }
 
@@ -251,9 +252,7 @@ public class SauceDemo1 {
     }
 
 
-
-
-    public void testCaseFive(String  product ) throws InterruptedException {
+    public void testCaseFive(String product) throws InterruptedException {
 
         System.out.println("******************************");
         System.out.println("UserName" + getuserName(1)); //standard_user
@@ -284,8 +283,7 @@ public class SauceDemo1 {
         Thread.sleep(500);
 
 
-
-        driver.findElement(By.xpath("//div[contains(text(), '"+product+"')]//ancestor::div[@class=\"inventory_item\"]//button")).click();
+        driver.findElement(By.xpath("//div[contains(text(), '" + product + "')]//ancestor::div[@class=\"inventory_item\"]//button")).click();
         System.out.println("**************************Item is  successfully added to cart ****************************");
         driver.findElement(By.xpath("//*/div[@class='shopping_cart_container']")).click();
         Thread.sleep(500);
@@ -314,7 +312,6 @@ public class SauceDemo1 {
     }
 
 
-
     public String getuserName(int userNumber) {
 
         List<String> userCredntls;
@@ -330,9 +327,9 @@ public class SauceDemo1 {
         userCredntls = List.of(driver.findElement(By.xpath("//div[@class='login_password']")).getText().split("\\s"));
         System.out.println("*************************************************");
         System.out.println("List " + userCredntls);
-        System.out.println("Password" + userCredntls.get(passNumber + userCredntls.size()-2));
+        System.out.println("Password" + userCredntls.get(passNumber + userCredntls.size() - 2));
 
-        return String.valueOf(userCredntls.get(passNumber + userCredntls.size()-2));
+        return String.valueOf(userCredntls.get(passNumber + userCredntls.size() - 2));
     }
 
     public String sortPrice() {
