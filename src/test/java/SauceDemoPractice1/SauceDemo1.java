@@ -23,13 +23,13 @@ public class SauceDemo1 {
             driver.navigate().to("https://www.saucedemo.com/");
             driver.manage().window().maximize();
             SauceDemo1 sauceDemoPractice = new SauceDemo1();
-           /* sauceDemoPractice.testCaseOne();
+           sauceDemoPractice.testCaseOne();
             Thread.sleep(500);
             sauceDemoPractice.testcaseTwo();
             Thread.sleep(500);
             sauceDemoPractice.testCaseThree();
             Thread.sleep(500);
-            sauceDemoPractice.testCaseFour();*/
+            sauceDemoPractice.testCaseFour();
             Thread.sleep(500);
             sauceDemoPractice.testCaseFive("Fleece Jacket"); //Send a name of Product to be search
             Thread.sleep(500);
